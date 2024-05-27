@@ -124,8 +124,23 @@ class AssignmentProvidedTests {
       int z = 4 / y;
     }
 
-    if (y >= 4) {
-      int x = 4 / y;
+    // TODO
+    // if (y >= 10) {
+    //   int x = 4 / y;
+    // }
+
+    if (y != -1) {
+      // :: error: divide.by.zero
+      int x = 1 / y;
+    } else {
+      int x = 1 / y;
     }
+
+    int n = 5;
+    n = n - 6;
+
+    // TODO: we actually know it's non zero?
+    // :: error: divide.by.zero
+    y = 1 / n;
   }
 }
