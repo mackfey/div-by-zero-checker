@@ -100,47 +100,87 @@ class AssignmentProvidedTests {
     int c = 1 % 3;
 
     // :: error: divide.by.zero
-    int x = 1 % 0;
+    int error1 = 1 % 0;
     // :: error: divide.by.zero
-    int y = 0 % 0;
+    int error2 = 0 % 0;
 
-    int z = 0 % 5;
+    int d = 0 % 5;
   }
 
-  public static void div(int y) {
+  public static void divKnownDenom(int y) {
+    int n = 4;
+    n = n - 5;
+    y = 1 / n;  // TODO: failing?
+
+    int one = 1 + 0;
+    y = 1 / one;
+  }
+
+  public static void divUnknownDenom(int y, int x) {
+    int one = 1 + 0;
+    one = 1 / one;
+
+    // :: error: divide.by.zero
+    System.out.println(x / y);
+    // :: error: divide.by.zero
+    System.out.println(y / x);
+  }
+
+  public static void divGreaterThanRange(int y) {
     if (y > -4) {
       // :: error: divide.by.zero
-      int x = 1 / y;
+      int error1 = 1 / y;
 
       // :: error: divide.by.zero
-      int z = 4 / y;
+      int error2 = 4 / y;
     }
 
     if (y >= (4 * 0)) {
       // :: error: divide.by.zero
-      int x = 1 / y;
+      int error3 = 1 / y;
 
       // :: error: divide.by.zero
-      int z = 4 / y;
+      int error4 = 4 / y;
     }
 
-    // TODO
-    // if (y >= 10) {
-    //   int x = 4 / y;
-    // }
+    if (y >= 10) {
+      int a = 4 / y;  // TODO: failing?
+    }
+  }
 
+  public static void divEquals(int y, int x) {
     if (y != -1) {
       // :: error: divide.by.zero
-      int x = 1 / y;
-    } else {
-      int x = 1 / y;
+      int error1 = 1 / y;
     }
 
-    int n = 5;
-    n = n - 6;
+    if (y != 1) {
+      // :: error: divide.by.zero
+      int error2 = 1 / y;
+    }
 
-    // TODO: we actually know it's non zero?
-    // :: error: divide.by.zero
-    y = 1 / n;
+    if (y == 1) {
+      int a = 1 / y;
+    }
+
+    int top = 6 - 5;
+    if (y == top) {
+      // :: error: divide.by.zero
+      int error3 = top / y;
+    }
+
+    int one = 1;
+    if (one == top) {
+      int b = top / one;
+    }
+
+    if (y != 0) {
+      System.out.println(x / y);
+    } else {
+      // :: error: divide.by.zero
+      System.out.println(x / y);
+    }
   }
+
+  // TODO: div/mod in if
 }
