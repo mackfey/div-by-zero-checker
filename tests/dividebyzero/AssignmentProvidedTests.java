@@ -84,11 +84,48 @@ class AssignmentProvidedTests {
   public static void l() {
     // :: error: divide.by.zero
     int a = 1 / (1 - 1);
+
     int y = 1;
     // :: error: divide.by.zero
     int x = 1 / (y - y);
+
     int z = y - y;
     // :: error: divide.by.zero
     int k = 1 / z;
+  }
+
+  public static void mod() {
+    int a = -1 % 3;
+    int b = 1 % -3;
+    int c = 1 % 3;
+
+    // :: error: divide.by.zero
+    int x = 1 % 0;
+    // :: error: divide.by.zero
+    int y = 0 % 0;
+
+    int z = 0 % 5;
+  }
+
+  public static void div(int y) {
+    if (y > -4) {
+      // :: error: divide.by.zero
+      int x = 1 / y;
+
+      // :: error: divide.by.zero
+      int z = 4 / y;
+    }
+
+    if (y >= (4 * 0)) {
+      // :: error: divide.by.zero
+      int x = 1 / y;
+
+      // :: error: divide.by.zero
+      int z = 4 / y;
+    }
+
+    if (y >= 4) {
+      int x = 4 / y;
+    }
   }
 }
