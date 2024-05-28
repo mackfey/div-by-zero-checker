@@ -107,6 +107,16 @@ class AssignmentProvidedTests {
     int d = 0 % 5;
   }
 
+  public static void modIfEvenOdd(int y) {
+    if (y % 2 == 0) {
+      System.out.println("even");
+    }
+
+    if (y % 2 == 1) {
+      System.out.println("odd");
+    }
+  }
+
   public static void divKnownDenom(int y) {
     int n = 4;
     n = n - 5;

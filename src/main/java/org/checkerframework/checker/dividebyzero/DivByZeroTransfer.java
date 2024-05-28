@@ -80,16 +80,17 @@ public class DivByZeroTransfer extends CFTransfer {
       case EQ:
         return rhs;
       case NE:
-        if (equal(rhs, reflect(Zero.class))) {
-          return reflect(NonZero.class);
-        }
-        break;
+        // if (equal(rhs, reflect(Zero.class))) {
+        //   return reflect(NonZero.class);
+        // }
+        // break;
       case LT:
       case GT:
         if (equal(rhs, reflect(Zero.class))) {
           return reflect(NonZero.class);
         }
-        return reflect(Top.class);
+        // return reflect(Top.class);
+        break;
       case LE:
       case GE:
       default:
