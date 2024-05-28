@@ -94,6 +94,17 @@ class AssignmentProvidedTests {
     int k = 1 / z;
   }
 
+  public static void times(int y) {
+    int zero = 0;
+    int one = 1;
+    int negOne = -1;
+
+    System.out.println(zero * zero);
+    System.out.println(zero * one);
+    System.out.println(zero * negOne);
+    System.out.println(zero * y);
+  }
+
   public static void mod() {
     int a = -1 % 3;
     int b = 1 % -3;
@@ -120,7 +131,9 @@ class AssignmentProvidedTests {
   public static void divKnownDenom(int y) {
     int n = 4;
     n = n - 5;
-    y = 1 / n;  // TODO: failing?
+    // Will error because nonzero / (nonzero - nonzero) = nonzero / top
+    // :: error: divide.by.zero
+    y = 1 / n;
 
     int one = 1 + 0;
     y = 1 / one;
@@ -153,8 +166,9 @@ class AssignmentProvidedTests {
       int error4 = 4 / y;
     }
 
-    if (y >= 10) {
-      int a = 4 / y;  // TODO: failing?
+    if (y > 10) {
+      // :: error: divide.by.zero
+      int a = 4 / y;  // nonzero / (top || nonzero)
     }
   }
 
@@ -191,6 +205,4 @@ class AssignmentProvidedTests {
       System.out.println(x / y);
     }
   }
-
-  // TODO: div/mod in if
 }

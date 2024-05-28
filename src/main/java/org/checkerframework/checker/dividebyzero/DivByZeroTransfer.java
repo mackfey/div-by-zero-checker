@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Set;
 import javax.lang.model.element.AnnotationMirror;
 import org.checkerframework.checker.dividebyzero.qual.*;
+import org.checkerframework.com.github.javaparser.printer.SourcePrinter;
 import org.checkerframework.dataflow.analysis.ConditionalTransferResult;
 import org.checkerframework.dataflow.analysis.RegularTransferResult;
 import org.checkerframework.dataflow.analysis.TransferInput;
@@ -78,18 +79,17 @@ public class DivByZeroTransfer extends CFTransfer {
       Comparison operator, AnnotationMirror lhs, AnnotationMirror rhs) {
     switch(operator) {
       case EQ:
-        return rhs;
+      return lub(rhs, lhs);
       case NE:
-        // if (equal(rhs, reflect(Zero.class))) {
-        //   return reflect(NonZero.class);
-        // }
-        // break;
+        if (equal(rhs, reflect(Zero.class))) {
+          return reflect(NonZero.class);
+        }
+        break;
       case LT:
       case GT:
         if (equal(rhs, reflect(Zero.class))) {
           return reflect(NonZero.class);
         }
-        // return reflect(Top.class);
         break;
       case LE:
       case GE:
@@ -146,7 +146,7 @@ public class DivByZeroTransfer extends CFTransfer {
           return reflect(Zero.class);
         }
         else if (equal(lhs, reflect(Top.class)) || equal(rhs, reflect(Top.class))) {
-          return top();
+          return reflect(Top.class);
         }
         else if (equal(lhs, reflect(NonZero.class)) && equal(rhs, reflect(NonZero.class))) {
           return reflect(NonZero.class);
@@ -162,10 +162,11 @@ public class DivByZeroTransfer extends CFTransfer {
         else if (equal(lhs, reflect(Zero.class))) {
           return reflect(Zero.class);
         }
-        else if ((equal(lhs, reflect(Top.class)) || equal(lhs, reflect(NonZero.class))
-          && equal(rhs, reflect(NonZero.class)))) {
+        else if ((equal(lhs, reflect(Top.class)) || equal(lhs, reflect(NonZero.class)))
+          && equal(rhs, reflect(NonZero.class))) {
           return reflect(Top.class);
         }
+
         throwUnsatisfiedExpressionException(lhs, operator, rhs);
         break;
       default:
